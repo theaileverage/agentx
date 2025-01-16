@@ -1,6 +1,4 @@
-import { ToolCallingAgent } from "../src/agents/tool_calling_agent.ts";
-import { HfApiModel } from "../src/models/hf_api_model.ts";
-import { HuggingFaceHubTool } from "../src/tools/huggingface_hub_tool.ts";
+import { ToolCallingAgent, HfApiModel, HuggingFaceHubTool } from "@agentx/core";
 
 // Example using Hugging Face Hub integration
 async function main() {
@@ -11,7 +9,7 @@ async function main() {
   const result = await agent.run(
     "Generate an image of a futuristic city using the stable-diffusion model"
   );
-  
+
   console.log("Generated Image URL:", result);
 }
 

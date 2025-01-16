@@ -128,3 +128,11 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+
+# ai_context
+.ai_context/
+.aider*
+
+.ref/
+
+.nvmrc

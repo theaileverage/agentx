@@ -1,6 +1,4 @@
-import { ToolCallingAgent } from "../src/agents/tool_calling_agent.ts";
-import { BaseTool } from "../src/tools/base_tool.ts";
-import { HfApiModel } from "../src/models/hf_api_model.ts";
+import { ToolCallingAgent, BaseTool, HfApiModel } from "@agentx/core";
 
 // Create a simple tool
 class CalculatorTool extends BaseTool {

@@ -1,0 +1,50 @@
+{
+  "name": "@agentx/core",
+  "version": "0.0.1",
+  "type": "module",
+  "description": "An agent framework for building AI-powered applications. Supports both Node.js and Deno environments.",
+  "main": "./dist/mod.js",
+  "module": "./dist/mod.js",
+  "types": "./dist/mod.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/mod.js",
+      "require": "./dist/mod.cjs",
+      "types": "./dist/mod.d.ts"
+    }
+  },
+  "files": [
+    "dist",
+    "LICENSE",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "test": "deno test",
+    "prepublishOnly": "npm run build",
+    "dev": "tsc --watch",
+    "clean": "rm -rf dist",
+    "lint": "tsc --noEmit"
+  },
+  "keywords": [
+    "ai",
+    "agents",
+    "llm",
+    "typescript",
+    "deno",
+    "nodejs",
+    "jsr"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/theaileverage/agentx"
+  }
+} 

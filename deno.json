@@ -1,0 +1,23 @@
+{
+  "workspaces": {
+    "@agentx/core": "./agentx",
+    "@agentx/docs": "./docs"
+  },
+  "imports": {
+    "@agentx/core": "./agentx/mod.ts",
+    "@agentx/core/": "./agentx/"
+  },
+  "tasks": {
+    "test": "deno test **/tests/",
+    "check": "deno check **/*.ts",
+    "lint": "deno lint",
+    "fmt": "deno fmt"
+  },
+  "fmt": {
+    "include": ["**/src/", "**/tests/"],
+    "exclude": ["**/dist/"],
+    "indentWidth": 2,
+    "lineWidth": 80,
+    "semiColons": true
+  }
+} 

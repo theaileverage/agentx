@@ -1,6 +1,4 @@
-import { BaseTool } from "../src/tools/base_tool.ts";
-import { ToolCallingAgent } from "../src/agents/tool_calling_agent.ts";
-import { HfApiModel } from "../src/models/hf_api_model.ts";
+import { BaseTool, ToolCallingAgent, HfApiModel } from "@agentx/core";
 
 // Custom tool for web search
 class WebSearchTool extends BaseTool {
@@ -17,7 +15,7 @@ class WebSearchTool extends BaseTool {
         snippet: "This is the first search result",
       },
       {
-        title: "Search Result 2", 
+        title: "Search Result 2",
         url: "https://example.com/result2",
         snippet: "This is the second search result",
       },

@@ -1,0 +1,14 @@
+{
+  "name": "@agentx/docs",
+  "version": "0.0.1",
+  "tasks": {
+    "dev": "deno run --watch mod.ts",
+    "build": "deno run build.ts"
+  },
+  "fmt": {
+    "include": ["src/"],
+    "indentWidth": 2,
+    "lineWidth": 80,
+    "semiColons": true
+  }
+} 
