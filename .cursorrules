@@ -1,0 +1,241 @@
+You are an expert package author in TypeScript for Deno & Node.js runtime.
+
+## Code Style and Structure
+
+**TypeScript Usage**
+- Write concise, technical TypeScript code with accurate examples.
+- Use functional and declarative programming patterns; avoid classes.
+- Prefer iteration and modularization over code duplication.
+- Use descriptive variable names with auxiliary verbs (e.g., isLoading, hasError).
+- Structure files logically with a proper separation of concerns.
+- Favor `unknown` over `any`, treating `any` as incorrect usage
+- Export interfaces for all parameters used in exported functions
+- Use underscores instead of dashes in filenames
+- Prefer interfaces over types.
+- Avoid enums; use maps instead.
+- Use functional components with TypeScript interfaces.
+- Use strict mode in TypeScript for better type safety.
+
+**Function Guidelines**
+- Exported functions should have maximum 2 arguments, with additional parameters in an options object[6]
+- Use the `function` keyword for top-level functions instead of arrow syntax
+- Minimize dependencies and avoid circular imports
+
+## File Organization
+
+**Naming Conventions**
+- Use `mod.ts` instead of `index.ts` for directory entry points[6]
+- Prefix internal module files with underscore (e.g., `_internal.ts`)[6]
+- Never link to files that start with underscore in public APIs
+
+**Module Structure**
+- Each module must come with a corresponding test module[6]
+- Place test files adjacent to the modules they test
+- Use explicit file extensions in imports[19]
+
+## Documentation
+
+**JSDoc Requirements**
+- Use JSDoc for all exported symbols[6]
+- Document browser compatibility with `// This module is browser-compatible.` when applicable[6]
+- Write explicit unit test names that describe the tested functionality[6]
+
+## Error Handling
+
+**Error Message Format**
+- Use colon for additional information: `Cannot parse input x: value is empty`[6]
+- Avoid contractions in error messages (use "cannot" instead of "can't")[6]
+- Describe both current and desired states in error messages[6]
+
+## Security and Standards
+
+**Permissions**
+- Always specify minimum required permissions
+- Use permission flags explicitly in scripts
+- Document required permissions in module documentation
+
+**Module Imports**
+- Use direct URL imports from `deno.land` standard library[19]
+- Implement import maps for alias management
+- Cache external dependencies appropriately
+
+## Testing Guidelines
+
+**Test Structure**
+- Write explicit test names that describe functionality[6]
+- Include unit tests for all public APIs
+- Use the Deno testing framework with `Deno.test()`
+- Implement test coverage reporting
+
+## Performance
+
+**Optimization Rules**
+- Minimize external dependencies
+- Implement proper caching strategies
+- Use async/await for asynchronous operations
+- Leverage Deno's built-in tooling for performance optimization
+
+## Slow Types Policy
+
+"Slow types" occur when exported elements lack explicit type declarations or contain complex types that cannot be simply inferred. The following rules must be followed:
+
+### 1. Explicit Type Declarations
+
+All exported elements must have explicit type declarations:
+
+- Functions must have explicit return types
+- Classes must have explicit types for properties
+- Constants must have explicit type annotations
+
+✅ Good:
+```typescript
+export function add(a: number, b: number): number {
+  return a + b;
+}
+
+export class Person {
+  name: string;
+  age: number;
+  constructor(name: string, age: number) {
+    this.name = name;
+    this.age = age;
+  }
+}
+
+export const GLOBAL_ID: string = crypto.randomUUID();
+```
+
+❌ Bad:
+```typescript
+export function add(a: number, b: number) {
+  return a + b;
+}
+
+export class Person {
+  name;
+  age;
+  constructor(name: string, age: number) {
+    this.name = name;
+    this.age = age;
+  }
+}
+
+export const GLOBAL_ID = crypto.randomUUID();
+```
+
+### 2. Module and Global Augmentation Restrictions
+
+The following features are not allowed:
+- `declare global`
+- `declare module`
+- `export as namespace`
+
+### 3. CommonJS Features
+
+CommonJS syntax is not supported. Use ESM syntax instead:
+
+✅ Good:
+```typescript
+export default 5;
+import foo from "foo";
+```
+
+❌ Bad:
+```typescript
+export = 5;
+import foo = require("foo");
+```
+
+### 4. Type Inference Rules
+
+- Types must be simply inferred or explicit
+- Complex types should use intermediate type declarations or type assertions
+
+✅ Good:
+```typescript
+const obj: { test: Class } = {
+  test: new Class(),
+};
+export default obj;
+
+// Or using type assertion
+export default {
+  test: new Class(),
+} as { test: Class };
+```
+
+### 5. Export Destructuring
+
+Destructuring in exports is not supported. Export symbols individually:
+
+✅ Good:
+```typescript
+const obj = { foo: 5, bar: "world" };
+export const foo: number = obj.foo;
+export const bar: string = obj.bar;
+```
+
+❌ Bad:
+```typescript
+export const { foo, bar } = { foo: 5, bar: "world" };
+```
+
+### 6. Private Field References
+
+Types must not reference private fields of classes:
+
+✅ Good:
+```typescript
+type MyPrivateMember = string;
+
+export class MyClass {
+  prop!: MyPrivateMember;
+  private myPrivateMember!: MyPrivateMember;
+}
+```
+
+❌ Bad:
+```typescript
+export class MyClass {
+  prop!: typeof MyClass.prototype.myPrivateMember;
+  private myPrivateMember!: string;
+}
+```
+
+## Simple Inference
+
+Simple inference is allowed in specific cases:
+
+1. Arrow function return types (single simple expression)
+2. Variable/property initialization with simple expressions
+
+Supported simple expressions include:
+- Number literals
+- String literals (no template strings)
+- Boolean literals
+- `null` and `undefined`
+- BigInt literals
+- `as T` assertions
+- `Symbol()` and `Symbol.for()` expressions
+- Regular expressions
+- Array literals with simple expressions
+- Object literals with simple expressions
+- Fully annotated functions
+
+## Ignoring Slow Types
+
+- Slow type diagnostics can only be ignored for the entire package
+- Use `--allow-slow-types` flag with `jsr publish` or `deno publish`
+- For Deno, add `no-slow-types` to rules exclude in `deno.json`:
+
+```json
+{
+  "lint": {
+    "rules": {
+      "exclude": ["no-slow-types"]
+    }
+  }
+}
+```
+
+Note: Individual slow type diagnostics cannot be ignored using comments like `// deno-lint-ignore no-slow-types`.

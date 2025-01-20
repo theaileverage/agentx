@@ -1,6 +1,7 @@
 {
   "name": "@agentx/core",
   "version": "0.0.1",
+  "description": "Core functionalities for the AgentX framework, designed for Deno.",
   "exports": "./mod.ts",
   "tasks": {
     "test": "deno test",
@@ -16,10 +17,20 @@
     "lineWidth": 80,
     "semiColons": true
   },
+  "publish": {
+    "include": [
+      "LICENSE",
+      "README.md",
+      "src/**/*.ts"
+    ],
+    "exclude": [
+      "!dist",
+      "tests"
+    ]
+  },
   "compilerOptions": {
     "strict": true,
     "allowJs": false,
     "lib": ["deno.window", "deno.ns", "dom"]
-  },
-  "description": "Core functionalities for the AgentX framework, designed for Deno."
+  }
 } 
