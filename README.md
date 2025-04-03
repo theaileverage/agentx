@@ -367,7 +367,7 @@ async function main() {
 
     agent.stepCallbacks.push(monitor.updateMetrics.bind(monitor));
 
-    const result = await agent.run("What is 2 + 2?");
+    const result = await agent.run("How many r's present in the word strawberry?");
     console.log(result);
 
     console.log(monitor.getTotalTokenCounts());

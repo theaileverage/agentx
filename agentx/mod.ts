@@ -45,7 +45,7 @@
  */
 
 // Core types
-export * from "./src/types.ts";
+export * from "./src/types/state-machine.ts";
 
 // Subsystems
 export * from "./src/agents/mod.ts";
